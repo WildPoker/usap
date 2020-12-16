@@ -13,23 +13,27 @@ const Chatapp = () => {
     db.collection("Chats")
       .doc("Rooms")
       .collection("Room-1")
+      .orderBy("timestamp", "asc")
       .onSnapshot((snapshot) => {
-        setMessages(snapshot.docs.map((doc) => ({ message: doc.data() })));
+        setMessages(
+          snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
+        );
       });
-    console.log(currentUser);
   }, []);
 
   return (
     <Container className={classes.container}>
       <Typography component="div" className={classes.Typography}>
-        {messages.map(({ message }) => {
+        {messages.map(({ id, data }) => {
           return (
             <div className={classes.messageHold}>
+              <p className={classes.username}>{data.username}</p>
               <p
+                key={id}
                 style={{ wordBreak: "break-all", whiteSpace: "normal" }}
                 className={classes.messageBox}
               >
-                {message.message}
+                {data.message}
               </p>
             </div>
           );

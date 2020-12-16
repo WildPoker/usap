@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 
 const Nav = () => {
   const classes = useStyles();
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, username } = useAuth();
   const history = useHistory();
 
   function handleLogout() {
@@ -31,7 +31,7 @@ const Nav = () => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" className={classes.title}>
-          Usap
+          Usap {username}
         </Typography>
         <Button color="inherit" onClick={handleLogout}>
           Logout
