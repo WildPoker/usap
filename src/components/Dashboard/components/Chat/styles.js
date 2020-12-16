@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   messageHold: {
     display: "block",
     maxWidth: "100%",
+    marginTop: "25px",
   },
   messageBox: {
     display: "inline-block",
@@ -44,9 +45,12 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px 30px 10px 30px",
     borderRadius: "20px",
     color: "white",
-    marginLeft: "10px",
+    margin: "2px 0 0 10px",
     maxWidth: "80%",
     minHeight: "100%",
+  },
+  username: {
+    margin: "2px 0 0 10px",
   },
 }));
 

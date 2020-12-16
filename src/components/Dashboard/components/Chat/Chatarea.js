@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 
 function Chatarea(props) {
   const classes = useStyles();
-  const { chat, currentUser } = useAuth();
+  const { chat, currentUser, username } = useAuth();
   const [chatInput, setChatInput] = useState("");
 
   const handleChange = (e) => {
@@ -17,7 +17,6 @@ function Chatarea(props) {
   const handleClick = () => {
     chat(chatInput);
     setChatInput("");
-    console.log(currentUser);
   };
 
   return (

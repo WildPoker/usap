@@ -25,6 +25,7 @@ function Signup() {
     e.preventDefault();
     const username = userRef.current.value;
     const email = emailRef.current.value;
+    const lowerEmail = email.toLowerCase();
     const password = passRef.current.value;
     const conPass = conPassRef.current.value;
 
@@ -33,7 +34,7 @@ function Signup() {
     }
     try {
       setError("");
-      signup(email, password, username);
+      signup(lowerEmail, password, username);
       history.push("/");
     } catch {
       setError("Failed to create an account");
