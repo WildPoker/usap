@@ -14,7 +14,11 @@ export function AuthProvider({ children }) {
     return console.log("Working!");
   }
 
-  function signup(email, password) {
+  function signup(email, password, username) {
+    const seq = (Math.floor(Math.random() * 10000) + 10000)
+      .toString()
+      .substring(1);
+
     return auth
       .createUserWithEmailAndPassword(email, password)
       .then((user) => {
@@ -25,10 +29,11 @@ export function AuthProvider({ children }) {
       })
       .then(() => {
         db.collection("users")
-          .doc(email)
+          .doc(username + "#" + seq)
           .collection("user-data")
           .doc("user-info")
           .set({
+            username: username + "#" + seq,
             email: email,
           });
       });
@@ -36,11 +41,12 @@ export function AuthProvider({ children }) {
 
   function chat(chat) {
     return db
-      .collection("chat")
-      .doc("room-1")
-      .collection("chats")
+      .collection("Chats")
+      .doc("Rooms")
+      .collection("Room-1")
       .add({
-        chat: chat,
+        sender: currentUser.email,
+        message: chat,
       })
       .then(function () {
         console.log("Successfully Send");

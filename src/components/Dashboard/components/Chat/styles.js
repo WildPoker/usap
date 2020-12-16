@@ -34,6 +34,20 @@ const useStyles = makeStyles((theme) => ({
     height: "100",
     marginLeft: "50px",
   },
+  messageHold: {
+    display: "block",
+    maxWidth: "100%",
+  },
+  messageBox: {
+    display: "inline-block",
+    backgroundColor: "blue",
+    padding: "10px 30px 10px 30px",
+    borderRadius: "20px",
+    color: "white",
+    marginLeft: "10px",
+    maxWidth: "80%",
+    minHeight: "100%",
+  },
 }));
 
 export default useStyles;

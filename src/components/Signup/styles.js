@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
   error: {
     color: "red",
   },
-  input: {
-    margin: "50px 0 0 0",
+  label: {
+    margin: "40px 0 0 0",
   },
   button: {
     marginTop: "30px",

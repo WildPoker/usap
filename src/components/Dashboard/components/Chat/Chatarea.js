@@ -6,16 +6,25 @@ import Button from "@material-ui/core/Button";
 
 function Chatarea(props) {
   const classes = useStyles();
-  const { chat } = useAuth();
-  const chatInput = useRef();
+  const { chat, currentUser } = useAuth();
+  const [chatInput, setChatInput] = useState("");
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setChatInput(value);
+  };
 
   const handleClick = () => {
-    chat(chatInput.current.value);
+    chat(chatInput);
+    setChatInput("");
+    console.log(currentUser);
   };
+
   return (
     <div className={classes.chatarea}>
       <TextField
-        inputRef={chatInput}
+        onChange={handleChange}
+        value={chatInput}
         className={classes.chatareaInput}
         autoFocus={true}
         placeholder="Chat Area"

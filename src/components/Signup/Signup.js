@@ -5,41 +5,35 @@ import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
 import useStyles from "./styles";
 import { Link, useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 
 function Signup() {
   const classes = useStyles();
-
-  const [signupUser, setSignupUser] = useState({
-    email: "",
-    password: "",
-    passwordConfirm: "",
-  });
+  const userRef = useRef();
+  const emailRef = useRef();
+  const passRef = useRef();
+  const conPassRef = useRef();
   const [error, setError] = useState("");
-  const { signup, storeData } = useAuth();
+  const { signup } = useAuth();
   const history = useHistory();
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setSignupUser((prevValue) => {
-      return {
-        ...prevValue,
-        [name]: value,
-      };
-    });
-  };
 
   function handleSignup(e) {
     e.preventDefault();
+    const username = userRef.current.value;
+    const email = emailRef.current.value;
+    const password = passRef.current.value;
+    const conPass = conPassRef.current.value;
 
-    if (signupUser.password !== signupUser.passwordConfirm) {
+    if (password !== conPass) {
       return setError("Passwords do not match");
     }
     try {
       setError("");
-      signup(signupUser.email, signupUser.password);
+      signup(email, password, username);
       history.push("/");
     } catch {
       setError("Failed to create an account");
@@ -50,19 +44,22 @@ function Signup() {
     <div className={classes.root}>
       <Card className={classes.card}>
         <form onSubmit={handleSignup}>
-          <InputLabel
-            htmlFor="input-with-icon-adornment"
-            className={classes.input}
-          >
-            Email
-          </InputLabel>
-
+          <InputLabel className={classes.label}>Username</InputLabel>
           <Input
-            onChange={handleChange}
-            name="email"
+            inputRef={userRef}
+            name="username"
             autoFocus
             required
-            id="input-with-icon-adornment"
+            startAdornment={
+              <InputAdornment position="start">
+                <PersonOutlineOutlinedIcon />
+              </InputAdornment>
+            }
+          />
+          <InputLabel className={classes.label}>Email</InputLabel>
+          <Input
+            inputRef={emailRef}
+            required
             startAdornment={
               <InputAdornment position="start">
                 <EmailOutlinedIcon />
@@ -70,36 +67,22 @@ function Signup() {
             }
           />
           {error && <InputLabel className={classes.error}>{error}</InputLabel>}
-          <InputLabel
-            htmlFor="input-with-icon-adornment"
-            className={classes.input}
-          >
-            Password
-          </InputLabel>
+          <InputLabel className={classes.label}>Password</InputLabel>
           <Input
-            onChange={handleChange}
-            name="password"
+            inputRef={passRef}
             required
             type="password"
-            id="input-with-icon-adornment"
             startAdornment={
               <InputAdornment position="start">
                 <LockOutlinedIcon />
               </InputAdornment>
             }
           />
-          <InputLabel
-            htmlFor="input-with-icon-adornment"
-            className={classes.input}
-          >
-            Confirm Password
-          </InputLabel>
+          <InputLabel className={classes.label}>Confirm Password</InputLabel>
           <Input
-            onChange={handleChange}
-            name="passwordConfirm"
+            inputRef={conPassRef}
             type="password"
             required
-            id="input-with-icon-adornment"
             startAdornment={
               <InputAdornment position="start">
                 <LockOutlinedIcon />
