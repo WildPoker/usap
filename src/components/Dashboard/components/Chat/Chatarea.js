@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../../../contexts/AuthContext";
 import useStyles from "./styles";
 import TextField from "@material-ui/core/TextField";
@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 
 function Chatarea(props) {
   const classes = useStyles();
-  const { chat, currentUser, username } = useAuth();
+  const { chat } = useAuth();
   const [chatInput, setChatInput] = useState("");
 
   const handleChange = (e) => {

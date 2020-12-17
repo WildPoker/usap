@@ -9,4 +9,5 @@ div ::-webkit-scrollbar-track {
 
 div ::-webkit-scrollbar-thumb {
   background-color: #30475e;
+  border-radius: 20px;
 }
