@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   },
   Typography: {
     height: "500px",
-    backgroundColor: "#e8e8e8",
+    backgroundColor: "#191d24",
     width: "600px",
     margin: "auto",
     overflow: "hidden",
@@ -51,6 +51,23 @@ const useStyles = makeStyles((theme) => ({
   },
   username: {
     margin: "2px 0 0 10px",
+    color: "white",
+  },
+
+  otherUsername: {
+    display: "block",
+    margin: "2px 0 0 10px",
+    color: "white",
+  },
+  otherMessageBox: {
+    display: "inline-block",
+    backgroundColor: "#add8e6",
+    padding: "10px 30px 10px 30px",
+    borderRadius: "20px",
+    color: "white",
+    margin: "2px 0 0 10px",
+    maxWidth: "80%",
+    minHeight: "100%",
   },
 }));
 

@@ -59,7 +59,6 @@ export function AuthProvider({ children }) {
 
   function settingUsername(user) {
     const lowerEmail = user.email.toLowerCase();
-    console.log(lowerEmail);
     const usernameRef = db
       .collection("users")
       .doc(lowerEmail)

@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { fade, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   AppBar: {
@@ -11,38 +11,44 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  container: {
-    marginTop: "50px",
-    backgroundColor: "transparent",
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(1),
+      width: "auto",
+    },
   },
-  Typography: {
-    height: "500px",
-    backgroundColor: "#e8e8e8",
-    width: "600px",
-    margin: "auto",
-    overflow: "hidden",
-    overflowY: "scroll",
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  chatarea: {
-    height: "50px",
-    backgroundColor: "transparent",
-    width: "600px",
-    margin: "auto",
-    marginTop: "10px",
+  inputRoot: {
+    color: "inherit",
   },
-
-  chatareaInput: {
-    backgroundColor: "transparent",
-    margin: "0",
-    padding: "0",
-    width: "500px",
-  },
-  multilineColor: {
-    color: "white",
-  },
-  buttonSend: {
-    width: "100px",
-    height: "100",
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
   },
 }));
 

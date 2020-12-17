@@ -4,9 +4,10 @@ import Container from "@material-ui/core/Container";
 import useStyles from "./styles";
 import { db } from "../../../../Firebase";
 import { useAuth } from "../../../../contexts/AuthContext";
+import "./Chat.css";
 const Chatapp = () => {
   const classes = useStyles();
-  const { currentUser } = useAuth();
+  const { username } = useAuth();
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -25,16 +26,28 @@ const Chatapp = () => {
     <Container className={classes.container}>
       <Typography component="div" className={classes.Typography}>
         {messages.map(({ id, data }) => {
+          const str = data.username;
+          const strLength = str.length;
+          const chatUsername = str.slice(0, strLength - 5);
+
+          const isUser = username === str;
+
           return (
-            <div className={classes.messageHold}>
-              <p className={classes.username}>{data.username}</p>
-              <p
-                key={id}
-                style={{ wordBreak: "break-all", whiteSpace: "normal" }}
-                className={classes.messageBox}
-              >
-                {data.message}
+            <div key={id} className={classes.messageHold}>
+              <p className={isUser ? classes.username : classes.otherUsername}>
+                {chatUsername}
               </p>
+              <div>
+                <p
+                  key={id}
+                  style={{ wordBreak: "break-all", whiteSpace: "normal" }}
+                  className={
+                    isUser ? classes.messageBox : classes.otherMessageBox
+                  }
+                >
+                  {data.message}
+                </p>
+              </div>
             </div>
           );
         })}
