@@ -7,15 +7,17 @@ const Background =
 
 function Dashboard() {
   const styles = {
-    minHeight: "100vh",
+    minHeight: "110vh",
     backgroundColor: "#222831",
     backgroundImage: `url(${Background})`,
   };
   return (
     <div style={styles}>
       <Nav />
-      <Chatapp />
-      <Chatarea />
+      <div style={{ display: "block", height: "100%" }}>
+        <Chatapp />
+        <Chatarea />
+      </div>
     </div>
   );
 }

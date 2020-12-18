@@ -21,6 +21,7 @@ const Nav = () => {
   const { logout, username, currentUser } = useAuth();
   const history = useHistory();
   const [open, setOpen] = useState(false);
+  const [friendOpen, setFriendOpen] = useState(false);
   const search = useRef();
   const [searchFound, setSearchFound] = useState("");
 
@@ -62,6 +63,7 @@ const Nav = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setFriendOpen(false);
   };
 
   async function handleKeyDown(e) {
@@ -77,53 +79,67 @@ const Nav = () => {
       history.push("/login");
     } catch {}
   }
-  return (
-    <AppBar position="static" className={classes.AppBar}>
-      <Toolbar>
-        <Typography variant="h6" className={classes.title}>
-          Usap {username}
-          <InputBase
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ "aria-label": "search" }}
-            onKeyPress={handleKeyDown}
-            inputRef={search}
-          />
-        </Typography>
 
-        <Button color="inherit" onClick={handleLogout}>
-          Logout
-        </Button>
-      </Toolbar>
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            <div>{searchFound ? searchFound : "user not found!"}</div>
-            {searchFound ? (
-              <PersonAddIcon
-                style={{ cursor: "pointer" }}
-                onClick={handleClick}
-              />
-            ) : null}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Close
+  const handleFriends = (e) => {
+    setFriendOpen(true);
+  };
+  return (
+    <div style={{ display: "block" }}>
+      <AppBar position="static" className={classes.AppBar}>
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
+            Usap {username}
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ "aria-label": "search" }}
+              onKeyPress={handleKeyDown}
+              inputRef={search}
+            />
+            <Button variant="contained" color="primary" onClick={handleFriends}>
+              Friends
+            </Button>
+          </Typography>
+
+          <Button color="inherit" onClick={handleLogout}>
+            Logout
           </Button>
-        </DialogActions>
-      </Dialog>
-    </AppBar>
+        </Toolbar>
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              <div>{searchFound ? searchFound : "user not found!"}</div>
+              {searchFound ? (
+                <PersonAddIcon
+                  style={{ cursor: "pointer" }}
+                  onClick={handleClick}
+                />
+              ) : null}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          modal
+          open={friendOpen}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+        ></Dialog>
+      </AppBar>
+    </div>
   );
 };
 

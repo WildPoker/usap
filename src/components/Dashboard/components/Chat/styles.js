@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   messageBox: {
     display: "inline-block",
-    backgroundColor: "blue",
+    backgroundColor: "#30475e",
     padding: "10px 30px 10px 30px",
     borderRadius: "20px",
     color: "white",
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
   otherMessageBox: {
     display: "inline-block",
-    backgroundColor: "#add8e6",
+    backgroundColor: "#6493c3",
     padding: "10px 30px 10px 30px",
     borderRadius: "20px",
     color: "white",
