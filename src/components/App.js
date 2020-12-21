@@ -4,15 +4,16 @@ import PrivateRoute from "./PrivateRoute";
 import Dashboard from "./Dashboard/Dashboard";
 import Login from "./Login/Login";
 import Signup from "./Signup/Signup";
+import Chats from "./Dashboard/Chats";
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <Switch>
-          <PrivateRoute exact path="/" component={Dashboard} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
+          <PrivateRoute path="/" component={Dashboard} />
         </Switch>
       </AuthProvider>
     </Router>

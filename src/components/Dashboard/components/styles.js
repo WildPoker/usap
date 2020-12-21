@@ -50,6 +50,52 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  dialog: {
+    width: "250px",
+  },
+  divMessage: {
+    display: "block",
+    margin: "25px",
+  },
+  buttonMessage: {
+    borderRadius: "100%",
+    float: "right",
+  },
+  messageHold: {
+    display: "block",
+    maxWidth: "100%",
+    marginTop: "25px",
+  },
+  messageBox: {
+    display: "inline-block",
+    backgroundColor: "#30475e",
+    padding: "10px 30px 10px 30px",
+    borderRadius: "20px",
+    color: "white",
+    margin: "2px 0 0 10px",
+    maxWidth: "80%",
+    minHeight: "100%",
+  },
+  username: {
+    margin: "2px 0 0 10px",
+    color: "white",
+  },
+
+  otherUsername: {
+    display: "block",
+    margin: "2px 0 0 10px",
+    color: "white",
+  },
+  otherMessageBox: {
+    display: "inline-block",
+    backgroundColor: "#6493c3",
+    padding: "10px 30px 10px 30px",
+    borderRadius: "20px",
+    color: "white",
+    margin: "2px 0 0 10px",
+    maxWidth: "80%",
+    minHeight: "100%",
+  },
 }));
 
 export default useStyles;

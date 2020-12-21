@@ -7,59 +7,24 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import Slide from "@material-ui/core/Slide";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import ChatIcon from "@material-ui/icons/Chat";
 import useStyles from "./styles";
 import firebase from "firebase";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
-import { useState, forwardRef, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { db } from "../../../Firebase";
 
 const Nav = () => {
   const classes = useStyles();
-  const { logout, username, currentUser } = useAuth();
+  const { logout, username, currentUser, settingRoomId, roomId } = useAuth();
   const history = useHistory();
   const [open, setOpen] = useState(false);
   const [friendOpen, setFriendOpen] = useState(false);
   const search = useRef();
   const [searchFound, setSearchFound] = useState("");
-
-  const Transition = forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  });
-
-  function friendsSearch() {
-    db.collection("users")
-      .doc(search.current.value)
-      .collection("user-data")
-      .doc("user-info")
-      .get()
-      .then(function (doc) {
-        if (doc.exists) {
-          const data = doc.data();
-          setSearchFound(data.username);
-        }
-      });
-  }
-  function handleClick() {
-    db.collection("users")
-      .doc(currentUser.email)
-      .collection("user-data")
-      .doc("user-friends")
-      .collection(search.current.value)
-      .add({
-        email: currentUser.email.toLowerCase(),
-        username: searchFound,
-        added: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-      .then(function () {
-        console.log("Successfully added");
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  }
+  const [friendList, setFriendList] = useState([]);
 
   const handleClose = () => {
     setOpen(false);
@@ -82,6 +47,80 @@ const Nav = () => {
 
   const handleFriends = (e) => {
     setFriendOpen(true);
+  };
+
+  const friendsSearch = () => {
+    if (search.current.value === "") {
+      setSearchFound("No users Found!");
+    } else {
+      db.collection("users")
+        .doc(search.current.value)
+        .collection("user-data")
+        .doc("user-info")
+        .get()
+        .then(function (doc) {
+          if (doc.exists) {
+            const data = doc.data();
+            setSearchFound(data.username);
+          }
+        });
+    }
+  };
+
+  const handleClick = (e) => {
+    const currentEmail = currentUser.email;
+    const otherEmail = search.current.value;
+    const roomIdNumber = Math.floor(100000 + Math.random() * 900000);
+    db.collection("users")
+      .doc(currentEmail)
+      .collection("user-data")
+      .doc("user-friends")
+      .collection("friend-lists")
+      .doc(otherEmail)
+      .set({
+        email: otherEmail.toLowerCase(),
+        username: searchFound,
+        added: firebase.firestore.FieldValue.serverTimestamp(),
+        roomId: roomIdNumber,
+      })
+      .then(function () {
+        console.log("Successfully added");
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+
+    db.collection("users")
+      .doc(otherEmail)
+      .collection("user-data")
+      .doc("user-friends")
+      .collection("friend-lists")
+      .doc(currentUser.email)
+      .set({
+        email: currentUser.email,
+        username: username,
+        added: firebase.firestore.FieldValue.serverTimestamp(),
+        roomId: roomIdNumber,
+      });
+  };
+
+  useEffect(() => {
+    db.collection("users")
+      .doc(currentUser.email)
+      .collection("user-data")
+      .doc("user-friends")
+      .collection("friend-lists")
+      .onSnapshot((snapshot) => {
+        setFriendList(
+          snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
+        );
+      });
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const otherEmail = e.target.innerText;
+    settingRoomId(otherEmail);
   };
   return (
     <div style={{ display: "block" }}>
@@ -108,15 +147,10 @@ const Nav = () => {
             Logout
           </Button>
         </Toolbar>
-        <Dialog
-          open={open}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={handleClose}
-        >
+        <Dialog open={open} keepMounted onClose={handleClose}>
           <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              <div>{searchFound ? searchFound : "user not found!"}</div>
+            <DialogContentText>
+              <div>{searchFound ? searchFound : searchFound}</div>
               {searchFound ? (
                 <PersonAddIcon
                   style={{ cursor: "pointer" }}
@@ -131,13 +165,37 @@ const Nav = () => {
             </Button>
           </DialogActions>
         </Dialog>
-        <Dialog
-          modal
-          open={friendOpen}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={handleClose}
-        ></Dialog>
+        <Dialog open={friendOpen} keepMounted onClose={handleClose}>
+          <DialogContent className={classes.dialog}>
+            <DialogContentText>
+              {friendList.map(({ id, data }) => {
+                const email = data.email;
+
+                return (
+                  <div key={id} className={classes.divMessage}>
+                    <form onSubmit={handleSubmit}>
+                      <a>{email}</a>
+
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        className={classes.buttonMessage}
+                      >
+                        <ChatIcon />
+                      </Button>
+                    </form>
+                  </div>
+                );
+              })}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
       </AppBar>
     </div>
   );
