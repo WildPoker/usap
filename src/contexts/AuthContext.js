@@ -14,6 +14,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
   const [roomId, setRoomId] = useState("");
+  const [messages, setMessages] = useState([]);
   const history = useHistory();
 
   function signup(lowerEmail, password, username) {
@@ -74,12 +75,24 @@ export function AuthProvider({ children }) {
         const data = doc.data();
         history.push(`/chats/${data.roomId}`);
         setRoomId(data.roomId);
+        readChat(data.roomId);
       } else {
         console.log("No Such Document!");
       }
     });
   }
 
+  function readChat(newId) {
+    db.collection("Chats")
+      .doc("Rooms")
+      .collection(newId.toString())
+      .orderBy("timestamp", "asc")
+      .onSnapshot((snapshot) => {
+        setMessages(
+          snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
+        );
+      });
+  }
   function SendMessage(chat) {
     const id = roomId.toString();
     const docRef = db.collection("Chats").doc("Rooms").collection(id);
@@ -96,7 +109,7 @@ export function AuthProvider({ children }) {
       });
   }
 
-  async function settingUsername(user) {
+  function settingUsername(user) {
     const lowerEmail = user.email.toLowerCase();
     const usernameRef = db
       .collection("users")
@@ -141,6 +154,7 @@ export function AuthProvider({ children }) {
     currentUser,
     username,
     roomId,
+    messages,
     login,
     signup,
     logout,

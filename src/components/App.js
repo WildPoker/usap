@@ -4,7 +4,6 @@ import PrivateRoute from "./PrivateRoute";
 import Dashboard from "./Dashboard/Dashboard";
 import Login from "./Login/Login";
 import Signup from "./Signup/Signup";
-import Chats from "./Dashboard/Chats";
 
 function App() {
   return (

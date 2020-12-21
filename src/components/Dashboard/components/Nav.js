@@ -18,7 +18,7 @@ import { db } from "../../../Firebase";
 
 const Nav = () => {
   const classes = useStyles();
-  const { logout, username, currentUser, settingRoomId, roomId } = useAuth();
+  const { logout, username, currentUser, settingRoomId } = useAuth();
   const history = useHistory();
   const [open, setOpen] = useState(false);
   const [friendOpen, setFriendOpen] = useState(false);

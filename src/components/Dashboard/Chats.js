@@ -11,21 +11,9 @@ import SendIcon from "@material-ui/icons/Send";
 const Chats = () => {
   const classes = useStyles();
   const chatRef = useRef();
-  const [messages, setMessages] = useState([]);
-  const { roomId, currentUser, username, SendMessage } = useAuth();
+  const { roomId, username, SendMessage, messages } = useAuth();
+  const [newId, setNewId] = useState();
   const divRef = useRef(null);
-
-  useEffect(() => {
-    db.collection("Chats")
-      .doc("Rooms")
-      .collection("957200")
-      .orderBy("timestamp", "asc")
-      .onSnapshot((snapshot) => {
-        setMessages(
-          snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
-        );
-      });
-  }, [roomId]);
 
   function handleClick() {
     SendMessage(chatRef.current.value);

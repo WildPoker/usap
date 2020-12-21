@@ -1,7 +1,5 @@
-import { BrowserRouter as Router, Switch, Link, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Nav from "./components/Nav";
-import Chatapp from "./components/Chat/Chatapp";
-import Chatarea from "./components/Chat/Chatarea";
 import Chats from "./Chats";
 
 const Background =
