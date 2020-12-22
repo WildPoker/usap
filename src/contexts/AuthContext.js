@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { auth, db } from "../Firebase";
 import firebase from "firebase";
 import { useHistory } from "react-router-dom";
@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
   const [messages, setMessages] = useState([]);
   const history = useHistory();
 
-  function signup(lowerEmail, password, username) {
+  async function signup(lowerEmail, password, username) {
     const seq = (Math.floor(Math.random() * 10000) + 10000)
       .toString()
       .substring(1);
@@ -131,24 +131,6 @@ export function AuthProvider({ children }) {
         console.log("Error getting document:", error);
       });
   }
-  function chat(chat) {
-    return db
-      .collection("Chats")
-      .doc("Rooms")
-      .collection("Room-1")
-      .add({
-        sender: currentUser.email.toLowerCase(),
-        username: username,
-        message: chat,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-      .then(function () {
-        console.log("Successfully Send");
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  }
 
   const value = {
     currentUser,
@@ -160,7 +142,6 @@ export function AuthProvider({ children }) {
     logout,
     settingRoomId,
     SendMessage,
-    chat,
   };
 
   return (

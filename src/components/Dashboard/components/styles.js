@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
   search: {
     position: "relative",
+    padding: "0px !important",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
@@ -25,15 +26,7 @@ const useStyles = makeStyles((theme) => ({
       width: "auto",
     },
   },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
   inputRoot: {
     color: "inherit",
   },
@@ -51,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   dialog: {
-    width: "250px",
+    width: "400px",
   },
   divMessage: {
     display: "block",
