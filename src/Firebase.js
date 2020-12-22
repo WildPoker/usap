@@ -8,7 +8,7 @@ const firebaseConfig = {
   projectId: "trying-authen",
   storageBucket: "trying-authen.appspot.com",
   messagingSenderId: "489776804631",
-  appId: "1:489776804631:web:846e442df5d4f5e53cfd52",
+  appId: "1:489776804631:web:810a50e5531698793cfd52",
 };
 // Initialize Firebase
 const fire = firebase.initializeApp(firebaseConfig);
