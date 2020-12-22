@@ -127,21 +127,27 @@ const Nav = () => {
       <AppBar position="static" className={classes.AppBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Usap {username}
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-              onKeyPress={handleKeyDown}
-              inputRef={search}
-            />
+            <div style={{ display: "inline-block", marginRight: "50px" }}>
+              Usap
+            </div>
+            <div style={{ display: "inline-block" }}>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+                onKeyPress={handleKeyDown}
+                inputRef={search}
+              />
+            </div>
             <Button variant="contained" color="primary" onClick={handleFriends}>
               Friends
             </Button>
           </Typography>
+
+          <a style={{ marginRight: "50px" }}>{username}</a>
 
           <Button color="inherit" onClick={handleLogout}>
             Logout
@@ -152,10 +158,9 @@ const Nav = () => {
             <DialogContentText>
               <div>{searchFound ? searchFound : searchFound}</div>
               {searchFound ? (
-                <PersonAddIcon
-                  style={{ cursor: "pointer" }}
-                  onClick={handleClick}
-                />
+                <Button style={{ borderRadius: "50%" }} onClick={handleClick}>
+                  <PersonAddIcon />
+                </Button>
               ) : null}
             </DialogContentText>
           </DialogContent>
@@ -173,7 +178,7 @@ const Nav = () => {
 
                 return (
                   <div key={id} className={classes.divMessage}>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} style={{ width: "100%" }}>
                       <a>{email}</a>
 
                       <Button

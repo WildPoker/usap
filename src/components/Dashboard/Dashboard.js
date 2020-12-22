@@ -1,6 +1,7 @@
 import { Switch, Route } from "react-router-dom";
 import Nav from "./components/Nav";
 import Chats from "./Chats";
+import "./Dashboard.css";
 
 const Background =
   "https://www.transparenttextures.com/patterns/inspiration-geometry.png";

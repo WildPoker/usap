@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
-import { db } from "../../Firebase";
+import React, { useRef } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import useStyles from "./styles";
 import Typography from "@material-ui/core/Typography";
@@ -11,9 +10,7 @@ import SendIcon from "@material-ui/icons/Send";
 const Chats = () => {
   const classes = useStyles();
   const chatRef = useRef();
-  const { roomId, username, SendMessage, messages } = useAuth();
-  const [newId, setNewId] = useState();
-  const divRef = useRef(null);
+  const { username, SendMessage, messages } = useAuth();
 
   function handleClick() {
     SendMessage(chatRef.current.value);
@@ -29,7 +26,7 @@ const Chats = () => {
           const isUser = username === str;
 
           return (
-            <div ref={divRef} key={id} className={classes.messageHold}>
+            <div key={id} className={classes.messageHold}>
               <p className={isUser ? classes.username : classes.otherUsername}>
                 {chatUsername}
               </p>
