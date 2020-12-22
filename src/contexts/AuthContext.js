@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth, db } from "../Firebase";
 import firebase from "firebase";
+import { useHistory } from "react-router-dom";
 
 const AuthContext = React.createContext();
 
@@ -12,6 +13,9 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
+  const [roomId, setRoomId] = useState("");
+  const [messages, setMessages] = useState([]);
+  const history = useHistory();
 
   function signup(lowerEmail, password, username) {
     const seq = (Math.floor(Math.random() * 10000) + 10000)
@@ -57,6 +61,54 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
+  async function settingRoomId(email) {
+    const docRef = db
+      .collection("users")
+      .doc(currentUser.email)
+      .collection("user-data")
+      .doc("user-friends")
+      .collection("friend-lists")
+      .doc(email);
+
+    docRef.get().then(function (doc) {
+      if (doc.exists) {
+        const data = doc.data();
+        history.push(`/chats/${data.roomId}`);
+        setRoomId(data.roomId);
+        readChat(data.roomId);
+      } else {
+        console.log("No Such Document!");
+      }
+    });
+  }
+
+  function readChat(newId) {
+    db.collection("Chats")
+      .doc("Rooms")
+      .collection(newId.toString())
+      .orderBy("timestamp", "asc")
+      .onSnapshot((snapshot) => {
+        setMessages(
+          snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
+        );
+      });
+  }
+  function SendMessage(chat) {
+    const id = roomId.toString();
+    const docRef = db.collection("Chats").doc("Rooms").collection(id);
+
+    docRef
+      .add({
+        sender: currentUser.email.toLowerCase(),
+        username: username,
+        message: chat,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }
+
   function settingUsername(user) {
     const lowerEmail = user.email.toLowerCase();
     const usernameRef = db
@@ -101,10 +153,13 @@ export function AuthProvider({ children }) {
   const value = {
     currentUser,
     username,
+    roomId,
+    messages,
     login,
     signup,
     logout,
-
+    settingRoomId,
+    SendMessage,
     chat,
   };
 

@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   container: {
     marginTop: "50px",
     backgroundColor: "transparent",
@@ -13,12 +13,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     overflowY: "scroll",
   },
-  chatarea: {
-    height: "50px",
-    backgroundColor: "transparent",
-    width: "600px",
-    margin: "auto",
-    marginTop: "10px",
+  buttonSend: {
+    width: "100px",
+    height: "100",
+    marginLeft: "50px",
   },
   chatareaInput: {
     backgroundColor: "transparent",
@@ -29,25 +27,12 @@ const useStyles = makeStyles((theme) => ({
   multilineColor: {
     color: "white !important",
   },
-  buttonSend: {
-    width: "100px",
-    height: "100",
-    marginLeft: "50px",
-  },
-  messageHold: {
-    display: "block",
-    maxWidth: "100%",
-    marginTop: "25px",
-  },
-  messageBox: {
-    display: "inline-block",
-    backgroundColor: "#30475e",
-    padding: "10px 30px 10px 30px",
-    borderRadius: "20px",
-    color: "white",
-    margin: "2px 0 0 10px",
-    maxWidth: "80%",
-    minHeight: "100%",
+  chatarea: {
+    height: "50px",
+    backgroundColor: "transparent",
+    width: "600px",
+    margin: "auto",
+    marginTop: "10px",
   },
   username: {
     margin: "2px 0 0 10px",
@@ -69,6 +54,16 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "80%",
     minHeight: "100%",
   },
-}));
+  messageBox: {
+    display: "inline-block",
+    backgroundColor: "#30475e",
+    padding: "10px 30px 10px 30px",
+    borderRadius: "20px",
+    color: "white",
+    margin: "2px 0 0 10px",
+    maxWidth: "80%",
+    minHeight: "100%",
+  },
+});
 
 export default useStyles;

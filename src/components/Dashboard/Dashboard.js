@@ -1,21 +1,22 @@
+import { Switch, Route } from "react-router-dom";
 import Nav from "./components/Nav";
-import Chatapp from "./components/Chat/Chatapp";
-import Chatarea from "./components/Chat/Chatarea";
+import Chats from "./Chats";
 
 const Background =
   "https://www.transparenttextures.com/patterns/inspiration-geometry.png";
 
 function Dashboard() {
   const styles = {
-    minHeight: "100vh",
+    minHeight: "110vh",
     backgroundColor: "#222831",
     backgroundImage: `url(${Background})`,
   };
   return (
     <div style={styles}>
       <Nav />
-      <Chatapp />
-      <Chatarea />
+      <Switch>
+        <Route path="/chats/:id" exact component={Chats} />
+      </Switch>
     </div>
   );
 }
